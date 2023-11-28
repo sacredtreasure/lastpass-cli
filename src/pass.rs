@@ -69,7 +69,19 @@ impl ServiceDetails {
     }
 } 
 
-pub fn render_password() -> 
+pub fn render_password() -> Result<Vec<ServiceDetails>, io::Error> {
+    let file = File::open("passwords.json")?;
+    let reader = io::BufReader::new(file);
+    let mut services = Vec::new();
+
+    for line in reader.lines() {
+        if let Ok(json_string) = line {
+            if let Ok(service_details) = ServiceDetails::from_json(&json_string) {
+                services.push(service_details);
+            }
+        }
+    }
+}
 
 pub fn entry(entry: &str) -> String {
     print!("{}", entry);

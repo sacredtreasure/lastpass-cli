@@ -54,6 +54,8 @@ fn main() {
                     entry("username: "),
                     entry("password: "),
                 );
+                println!("password entry saved!");
+                new_entry.write_to_file();
             }
             "2" => {
                 clr();
