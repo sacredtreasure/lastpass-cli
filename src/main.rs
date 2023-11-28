@@ -48,49 +48,55 @@ fn main() {
         std::io::stdin().read_line(&mut choice).unwrap();
 
         match choice.trim() {
-           "1" => {
-            
-           }
-           "2" => {
-            clr();
-            let services = render_password().unwrap_or_else(|err| {
-                eprintln!("error reading passwords: {}", err);
-                Vec::new()
-            }); 
-            for item in &services {
-                println!(
-                    "service {}
-                    - username: {}
-                    - password: {}",
-                    item.service, item.username, item.password
+            "1" => {
+                let new_entry = ServiceDetails::new(
+                    entry("service: "),
+                    entry("username: "),
+                    entry("password: "),
                 );
             }
-           }
-           "3" => {
-             clr();
-            let services = render_password().unwrap_or_else(|err| {
-                eprintln!("error reading passwords: {}", err);
-                Vec::new()
-            }); 
-            let search = entry("search: ");
-            for item in &services {
-                if item.service.as_str() == search.as_str() {
+            "2" => {
+                clr();
+                let services = render_password().unwrap_or_else(|err| {
+                    eprintln!("error reading passwords: {}", err);
+                    Vec::new()
+                });
+                for item in &services {
                     println!(
                         "service {}
-                        - username: {}
-                        - password: {}",
+                    - username: {}
+                    - password: {}",
                         item.service, item.username, item.password
                     );
-                } else {
-                    println!("no saved passowords for this service");
                 }
             }
-           } 
-           "4" => {
-           clr();
-           }
+            "3" => {
+                clr();
+                let services = render_password().unwrap_or_else(|err| {
+                    eprintln!("error reading passwords: {}", err);
+                    Vec::new()
+                });
+                let search = entry("search: ");
+                for item in &services {
+                    if item.service.as_str() == search.as_str() {
+                        println!(
+                            "service {}
+                        - username: {}
+                        - password: {}",
+                            item.service, item.username, item.password
+                        );
+                    } else {
+                        println!("no saved passowords for this service");
+                    }
+                }
+            }
+            "4" => {
+                clr();
+                println!("see you soon!");
+                break;
+            }
+            _ => println!("invalid command. pick from: 1, 2 or 3 and press 4 to quit"),
         }
+        println!("\n\n");
     }
 }
-
-
