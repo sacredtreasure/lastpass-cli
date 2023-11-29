@@ -1,11 +1,11 @@
-use serde::{Deserialize, Serialize};
+use serde::{ Deserialize, Serialize };
 use std::fs::File;
 use std::fs::OpenOptions;
 use std::io;
 use std::io::BufRead;
 use std::io::Write;
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct ServiceDetails {
     pub service: String,
     pub username: String,
@@ -42,10 +42,10 @@ impl ServiceDetails {
         ServiceDetails::new(
             service.trim().to_string(),
             username.trim().to_string(),
-            password.trim(),
+            password.trim().to_string(),
         )
     }
-
+    
     pub fn to_json(&self) -> String {
         serde_json::to_string(&self).expect("failed to serialize json")
     }
@@ -59,7 +59,7 @@ impl ServiceDetails {
             .open("passwords.json")
             {
                 Ok(mut file) => {
-                    file.write_all(json_output.as_bytes()) {
+                    if let Err(e) = file.write_all(json_output.as_bytes()) {
                         eprintln!("error writing to file: {}", e);
                     } else {
                         println!("successfully saved passwords to file.")
@@ -81,6 +81,7 @@ pub fn render_password() -> Result<Vec<ServiceDetails>, io::Error> {
             }
         }
     }
+    Ok(services)
 }
 
 pub fn entry(entry: &str) -> String {
@@ -88,5 +89,5 @@ pub fn entry(entry: &str) -> String {
     io::stdout().flush().unwrap();
     let mut input = String::new();
     io::stdin().read_line(&mut input).unwrap();
-    input.trim().to_String()
+    input.trim().to_string()
 }
