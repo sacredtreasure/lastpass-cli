@@ -90,7 +90,7 @@ fn main() {
                 println!("see you soon!");
                 break;
             }
-            _ => println!("invalid command. pick from: 1, 2 or 3 and press 4 to quit"),
+            _ => println!("invalid command. pick from: 1, 2, 3 or press 4 to quit"),
         }
         println!("\n\n");
     }
