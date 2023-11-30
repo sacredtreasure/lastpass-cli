@@ -81,7 +81,7 @@ fn main() {
                             item.service, item.username, item.password
                         );
                     } else {
-                        println!("no saved passowords for this service");
+                        println!("no saved passwords for this service");
                     }
                 }
             }
